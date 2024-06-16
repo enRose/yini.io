@@ -8,9 +8,9 @@ export default function Page() {
         Hello, I'm yiniyin 👋
       </h1>
       <p className="prose prose-neutral dark:prose-invert mb-4">
-        {`I'm an engineer works at `}
+        {`I'm a software engineer. I currently work at `}
         <Link href="https://www.kiwibank.co.nz">Kiwibank</Link>
-        {` where my team helps bringing the best digital banking 
+        {` where my team helps bring the best digital banking 
         experience possible to every Kiwi. `}
         {`I ponder upon various things such as `}
         <Badge href="https://nextjs.org">
@@ -43,7 +43,7 @@ export default function Page() {
           {`. `}
           {`You'll find my papers about technologies I'm interested
           in at the time, or things and experiences I learned in my 
-          career which I try to share along the way.`}
+          career, which I try to share along the way.`}
         </p>
       </div>
       <div className="my-8">
