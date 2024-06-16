@@ -1,52 +1,141 @@
 ---
-title: 'Scearios Based Technical Interview'
+title: 'Scenario-based Technical Interview'
 publishedAt: '2024-06-09'
-summary: 'In the ever-evolving landscape of software development, the debate between dynamic and static typing continues to be a hot topic.'
+summary: 'Technical interviews that set up for candidates success'
 ---
 
-In the ever-evolving landscape of software development, the debate between dynamic and static typing continues to be a hot topic. While dynamic typing offers flexibility and rapid development, static typing brings its own set of powerful advantages that can significantly improve the quality and maintainability of code. In this post, we'll explore why static typing is crucial for developers, accompanied by practical examples through markdown code snippets.
+Technical interviews that I have seen, the majority of them are based on
+the concept of [Advent of Code](https://adventofcode.com/). Many companies
+source their technical puzzles from platforms such as [Leetcode](https://leetcode.com/explore/),
+[Hackerrank](https://www.hackerrank.com/products/interview/). Although these
+code puzzles have their value, however they are quite different from what we
+as engineers do every day.
 
-## Improved Code Quality and Safety
+In below example, I propose scenario-based coding
+tests that reflect the challenges I encounter in my job. These tests are
+designed to explore candidates technical skills in a holistic manner, requiring
+them to navigate multiple aspects of technical proficiency.
 
-One of the most compelling reasons to use static typing is the improvement it brings to code quality and safety. By enforcing type checks at compile time, static typing catches errors early in the development process, reducing the chances of runtime errors.
+## Mock PRs
+
+As an engineer, we review PRs all day every day. It is one of the most essential
+skills we should have as an engineer as how to spot issues and improvements in PRs,
+and most importantly how to celebrate the good things in PRs, yet being candid in
+giving feedback.
+
+So I personally think conducting a mock PR exercise, not only we can explore
+candidate's technical capability, but also a great tool to investigate how candidates
+give feedback.
+
+## Feature Flags
+
+Feature flag is one of the most used ingredients when it comes to trunk-based
+development to increase CD cadence and reduce risk. It is safe to say that we
+will encounter feature flags at some point in our career. Either it is a bespoke
+one we build in-house, or a 3rd party vendor system we purchase off the shelf,
+one of the unavoidable facts of feature flags is they have the tendency to grow,
+and grow fast. We should think about feature flags as inventory which has a
+carrying cost. The large the number of the flags is, the greater the cost would be.
+Another interesting fact of feature flags is they tend to proliferate throughout
+the codebase. When you combine prolification and speed of growth, you end up a codebase
+that is decorated with seemingly unused flags and its companion decisioning logic they
+clutter around core application logic like barnacles.
+
+## Feature Flags - Solar System Planets
+
+In this mock PR, we add feature toggle decision logic in conjunction of feature
+flag value fetched from our feature flag vendor system to toggle the visibility
+of each planet.
+
+Earth: toggle based on Wellington weather
+
+Mars: toggle based on Wellington weather
+
+Mercury: toggle based on Mercury public holiday 1st June 2024
+
+Venus: toggle based on random dice
+
+<Image
+  alt="Heroku's original product, an in-browser IDE allowing you to instantly create and publish Rails apps."
+  src={`/images/pr.png`}
+  width={833}
+  height={623}
+/>
+
+<br />
+
+## Things to Look For
+
+`Toggle decision logic` - normally is business requirement, ensure we don't embed
+it at the call site.
+
+Below code in the mock PR, we can see decision logic is built directly inside the
+component. Not only that, we have a second component Mars.tsx also has the exact
+same decision logic and we now have just duplicated the same logic in two places.
+The type of duplication is what I call duplication of knowledge which is much dangerous
+form of duplication.
 
 ```ts
-function greet(name: string): string {
-  return `Hello, ${name}!`
+import { FlagKeys, useFlag } from "../feature-flags/feature-flag-provider";
+
+export default function Earth() {
+  const earthFlag = useFlag(FlagKeys.earth);
+
+  const WellingtonWeather = getWellyWeather();
+
+  let selected = false;
+
+  if (earthFlag) {
+    if (WellingtonWeather === "windy") {
+      selected = false;
+    }
+
+    if (WellingtonWeather === "sunny") {
+      selected = true;
+    }
+  }
+
+  return <div className="App">{selected && <h1>Earth</h1>}</div>;
 }
 
-// This will throw an error at compile time, preventing potential runtime issues.
-let message: string = greet(123)
-```
-
-## Enhanced Readability and Maintainability
-
-Static typing makes code more readable and maintainable. By explicitly declaring types, developers provide a clear contract of what the code does, making it easier for others (or themselves in the future) to understand and modify the codebase.
-
-## Facilitates Tooling and Refactoring
-
-Modern IDEs leverage static typing to offer advanced features like code completion, refactoring, and static analysis. These tools can automatically detect issues, suggest fixes, and safely refactor code, enhancing developer productivity and reducing the likelihood of introducing bugs during refactoring.
-
-```csharp
-// Refactoring example: Renaming a method in C#
-public class Calculator {
-    public int Add(int a, int b) {
-        return a + b;
-    }
-}
-
-// After refactoring `Add` to `Sum`, all references are automatically updated.
-public class Calculator {
-    public int Sum(int a, int b) {
-        return a + b;
-    }
+function getWellyWeather() {
+  const i = Math.floor(Math.random() * 2);
+  return ["windy", "sunny"][i];
 }
 ```
 
-## Performance Optimizations
+<br />
 
-Static typing can lead to better performance. Since types are known at compile time, compilers can optimize the generated code more effectively. This can result in faster execution times and lower resource consumption.
+<Callout emoji="💡">
+
+Martin Fawler's [Feature Toggles](https://martinfowler.com/articles/feature-toggles.html#ImplementationTechniques)
+explains how to use IoC to decouple call sites from decision logic.
+
+</Callout>
+
+`Test` - we can see there are no tests at all. We would expect candidate to
+point out the fact that the lack of tests in this PR. Also we can use this to let
+candidate to drive how she or he would like to write tests.
+
+`Listen` - PR reviewer should ask questions and listen, rather than off-loading opinions.
+Even if we think we know the answer, we should hold back and listen like we don't know
+the answer, listen like we are not waiting to speak, or listen like we are not going
+to finish their sentence. The chances are we may something new from a different perspective.
+
+`celebrate the good things in PR` - this has to be one of the things we should do but
+we don't do it enough. Celebrate the good things in public, and discuss and understand
+the why in private.
 
 ## Conclusion
 
-Static typing offers numerous benefits that contribute to the development of robust, efficient, and maintainable software. By catching errors early, enhancing readability, facilitating tooling, and enabling optimizations, static typing is an invaluable asset for developers. As the software industry continues to mature, the importance of static typing in ensuring code quality and performance cannot be overstated. Whether you're working on a large-scale enterprise application or a small project, embracing static typing can lead to better software development outcomes.
+I hope I've convinced you scenario-based technical tests are a good idea to be added to
+your AoC coding puzzles. Scenario-based coding tests are like open-ended questions but
+done it in code. Another good example of scenario-based coding test is given a realistic
+business requirement candidate is to pair up with an interviewer to complete the change
+together. E.g. how to switch API scope to generate different access token as user navigates
+to different sections of the app that requires different access token. Which will be my
+next post, keep an eye in this blog. :)
+
+## Reference
+
+[Mock PR Feature Toggle](https://github.com/kb-code-quest/solar-system-planets/pull/1)

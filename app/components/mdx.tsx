@@ -4,6 +4,15 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
 
+function Callout(props) {
+  return (
+    <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 py-3 px-4 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
+      <div className="mr-4 flex w-4 items-center">{props.emoji}</div>
+      <div className="callout w-full">{props.children}</div>
+    </div>
+  )
+}
+
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
     <th key={index}>{header}</th>
@@ -74,8 +83,8 @@ function createHeading(level) {
         React.createElement('a', {
           href: `#${slug}`,
           key: `link-${slug}`,
-          className: 'anchor',
-        }),
+          className: 'anchor'
+        })
       ],
       children
     )
@@ -95,8 +104,9 @@ let components = {
   h6: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
+  Callout,
   code: Code,
-  Table,
+  Table
 }
 
 export function CustomMDX(props) {

@@ -9,9 +9,7 @@ export default function Page() {
       </h1>
       <p className="prose prose-neutral dark:prose-invert mb-4">
         {`I'm an engineer works at `}
-        <Link href="https://www.kiwibank.co.nz/personal-banking/">
-          Kiwibank
-        </Link>
+        <Link href="https://www.kiwibank.co.nz">Kiwibank</Link>
         {` where my team helps bringing the best digital banking 
         experience possible to every Kiwi. `}
         {`I ponder upon various things such as `}
@@ -25,6 +23,10 @@ export default function Page() {
           />
           Next.js
         </Badge>
+        {`, and `}{' '}
+        <Link href="https://youtu.be/BXNROiWvxpY?si=DofJolOiNNQ4Xtm6">
+          time
+        </Link>
         {`.`}
       </p>
       <div className="prose prose-neutral dark:prose-invert">

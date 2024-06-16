@@ -11,17 +11,17 @@ import { baseUrl } from './sitemap'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Next.js Portfolio Starter',
-    template: '%s | Next.js Portfolio Starter',
+    default: 'Yini Yin Portfolio',
+    template: '%s | Yini Yin Portfolio'
   },
-  description: 'This is my portfolio.',
+  description: 'This is yiniyin portfolio.',
   openGraph: {
     title: 'My Portfolio',
     description: 'This is my portfolio.',
     url: baseUrl,
-    siteName: 'My Portfolio',
+    siteName: 'Yiniyin Portfolio',
     locale: 'en_US',
-    type: 'website',
+    type: 'website'
   },
   robots: {
     index: true,
@@ -31,15 +31,15 @@ export const metadata: Metadata = {
       follow: true,
       'max-video-preview': -1,
       'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+      'max-snippet': -1
+    }
+  }
 }
 
 const cx = (...classes) => classes.filter(Boolean).join(' ')
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {
@@ -47,13 +47,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={cx(
-        'text-black bg-white dark:text-white dark:bg-black',
+        'bg-white text-black dark:bg-black dark:text-white',
         GeistSans.variable,
         GeistMono.variable
       )}
     >
-      <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+      <body className="mx-4 mt-8 max-w-xl antialiased lg:mx-auto">
+        <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
           <Navbar />
           {children}
           <Footer />

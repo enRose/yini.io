@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export function GET(request: Request) {
   let url = new URL(request.url)
-  let title = url.searchParams.get('title') || 'Next.js Portfolio Starter'
+  let title = url.searchParams.get('title') || 'Yini Yin Portfolio'
 
   return new ImageResponse(
     (
@@ -16,7 +16,7 @@ export function GET(request: Request) {
     ),
     {
       width: 1200,
-      height: 630,
+      height: 630
     }
   )
 }
